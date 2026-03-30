@@ -41,3 +41,24 @@ ssh -T git@github.com
 
 #######################################
 
+## install ansible
+
+apt install ansible -y
+
+# @ edge servers
+useradd -m  -s /bin/bash ansible 
+passwd ansible 
+vim /etc/sudoers
+    ansible ALL=(ALL:ALL) ALL
+
+# @ Control Node
+useradd -m  -s /bin/bash ansible 
+passwd ansible 
+vim /etc/sudoers
+    ansible ALL=(ALL:ALL) ALL
+
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_ed25519.pub ansible@192.168.1.5
+
+#######################################
+
