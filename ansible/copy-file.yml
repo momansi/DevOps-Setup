@@ -1,0 +1,11 @@
+---
+- name: copy file
+  hosts: all
+  become: yes
+  tasks:
+    - name:  copy file
+      ansible.builtin.copy:
+        src: /home/ansible/ansible/test
+        dest: /home/ansible/test
+        owner: ansible
+        mode: u=rw,g=r,o=r 

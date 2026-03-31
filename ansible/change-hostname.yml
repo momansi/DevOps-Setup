@@ -1,0 +1,19 @@
+---
+- name: learning ansible
+  hosts: centos
+  become: yes
+  vars:
+    new_hostname: server
+  tasks:
+    - name: change hostname
+      hostname: 
+        name: "{{ new_hostname }}"
+
+
+    - name: check hostname
+      command: hostname
+      register: hostname_op
+
+    - name: print hostname
+      debug:
+        msg: "The hostname is {{ hostname_op.stdout }}"

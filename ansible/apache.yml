@@ -1,0 +1,15 @@
+---
+- name: install and enable apache for ubuntu
+  hosts: ubuntu
+  become: yes
+  tasks:
+    - name:  install apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: enable apache
+      service:
+        name: apache2
+        state: started
+        enabled: true
