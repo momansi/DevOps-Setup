@@ -61,6 +61,21 @@ docker history nginx
 
 docker image build -t muhammadelmansi/flask-app:v1.0 .
 
+## docker networking
+
+docker network ls
+docker network create -d bridge --subnet 192.168.100.0 network_name         # bridge, host, none
+docker container run -d --network=network_name --name=container_name nginx
+
+docker network connect network_name container_name
+docker network disconnect network_name container_name
+docker network remove network_name
+
+## docker volumes
+
+docker volume ls
+docker volume create volume_name
+docker run -d -v volume_name:/path --name=container_name nginx
 
 ## dockerhub
 docker login -u muhammadelmansi         # then enter token that was generated from dockerhub site
