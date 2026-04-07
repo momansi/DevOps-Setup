@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voting App</title>
+</head>
+<body>
+    <h1>Vote Now</h1>
+
+    <button onclick="vote('Candidate A')">Candidate A</button>
+    <button onclick="vote('Candidate B')">Candidate B</button>
+
+    <h2>Results</h2>
+    <ul id="results"></ul>
+
+    <script>
+        async function vote(candidate) {
+            await fetch('/vote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ candidate })
+            });
+            loadVotes();
+        }
+
+        async function loadVotes() {
+            const response = await fetch('/votes');
+            const data = await response.json();
+
+            const list = document.getElementById('results');
+            list.innerHTML = '';
+
+            data.forEach(item => {
+                list.innerHTML += `<li>${item.candidate}: ${item.count}</li>`;
+            });
+        }
+
+        loadVotes();
+    </script>
+</body>
+</html>
