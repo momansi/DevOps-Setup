@@ -48,14 +48,19 @@ apt install ansible -y
 # @ edge servers
 useradd -m  -s /bin/bash ansible 
 passwd ansible 
-vim /etc/sudoers
-    ansible ALL=(ALL:ALL) ALL
+
+sudo visudo -f /etc/sudoers.d/ansible
+    ansible ALL=(ALL:ALL) NOPASSWD: ALL
+sudo chmod 440 /etc/sudoers.d/ansible
+
 
 # @ Control Node
 useradd -m  -s /bin/bash ansible 
 passwd ansible 
-vim /etc/sudoers
-    ansible ALL=(ALL:ALL) ALL
+
+sudo visudo -f /etc/sudoers.d/ansible
+    ansible ALL=(ALL:ALL) NOPASSWD: ALL
+sudo chmod 440 /etc/sudoers.d/ansible
 
 ssh-keygen
 ssh-copy-id -i ~/.ssh/id_ed25519.pub ansible@192.168.1.5
