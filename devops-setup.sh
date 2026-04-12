@@ -117,3 +117,14 @@ sudo mv kubectl /usr/local/bin/
 minikube start --driver=docker
 
 minikube version
+
+# enable auto complition for kubectl and minikube commands
+
+# @ runtime
+source <(kubectl completion bash)
+
+# permanent
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+echo 'source <(minikube completion bash)' >> ~/.bashrc
+
+#######################################
