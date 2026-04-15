@@ -1,0 +1,12 @@
+# create new namespace
+kubectl create namespace rbac-lab
+
+# create new serviceaccount inside new namespace
+kubectl create serviceaccount dev-user --namespace rbac-lab
+
+# create view-role.yml file 
+
+# create view-role-binding.yml file and associate role with it
+
+# test dev-user user that can list pods
+kubectl auth can-i list pods --namespace rbac-lab --as=system:serviceaccount:rbac-lab:dev-user

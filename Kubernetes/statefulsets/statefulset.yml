@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  serviceName: mariadb-headless
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb-container
+          image: mariadb
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: 'password'
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mariadb-data
+            - mountPath: /docker-entrypoint-initdb.d
+              name: mariadb-init
+      volumes:
+        - name: mariadb-init
+          configMap:
+            name: mariadb-config
+        
+  volumeClaimTemplates:
+    - metadata:
+        name: mariadb-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: "standard"
+        resources:
+          requests:
+            storage: 1Gi
+      
