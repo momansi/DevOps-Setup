@@ -128,3 +128,11 @@ echo 'source <(kubectl completion bash)' >> ~/.bashrc
 echo 'source <(minikube completion bash)' >> ~/.bashrc
 
 #######################################
+
+## install jenkins in docker container
+
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --restart on-failure -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker --user root jenkins/jenkins:lts
+
+docker exec -it jenkins bash
+
+#######################################
