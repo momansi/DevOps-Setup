@@ -127,6 +127,8 @@ source <(kubectl completion bash)
 echo 'source <(kubectl completion bash)' >> ~/.bashrc
 echo 'source <(minikube completion bash)' >> ~/.bashrc
 
+minikube addons enable ingress      # enable ingress
+
 #######################################
 
 ## install jenkins in docker container
@@ -134,5 +136,26 @@ echo 'source <(minikube completion bash)' >> ~/.bashrc
 docker run -d -p 8080:8080 -p 50000:50000 --name jenkins --restart on-failure -v jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker --user root jenkins/jenkins:lts
 
 docker exec -it jenkins bash
+
+#######################################
+
+## install prometheus and grafana using helm (kube-prometheus-stack)
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+
+kubectl create ns monitoring 
+
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring
+
+# access prometheus UI
+
+kubectl port-forward service/monitoring-kube-prometheus-prometheus -n monitoring 9090:9090
+
+# access grafana UI
+# username is admin and get password from this command 
+kubectl get secret monitoring-grafana -n monitoring -o jsonpath="{.data.admin-password}" | base64 --decode
+
+kubectl port-forward service/monitoring-grafana -n monitoring 8082:80
 
 #######################################
